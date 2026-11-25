@@ -1,0 +1,6 @@
+/* bot-expression-avatar: 自动生成，勿手改 */
+:where(body:has([data-sidebar-bot-row="00000000-0000-0000-0000-000000000000"][aria-busy="true"])) img[src*="5ddccc93"] { content: url("/api/theme-assets/background/busy.gif") !important; }
+:where([data-look="message-bot"]:has([data-streaming]), [data-look="app"]:has([data-look="bot-text"][data-streaming]) [data-look="chat-header"]) img[src*="5ddccc93"] { content: url("/api/theme-assets/background/talk.gif") !important; }
+:where([data-sidebar-bot-row="00000000-0000-0000-0000-000000000000"]:hover, [data-avatar]:hover) img[src*="5ddccc93"] { content: url("/api/theme-assets/background/hover.gif") !important; }
+img[src*="5ddccc93"]:hover { content: url("/api/theme-assets/background/hover.gif") !important; }
+@media (prefers-reduced-motion: reduce) { [data-avatar] img { content: normal !important; } }

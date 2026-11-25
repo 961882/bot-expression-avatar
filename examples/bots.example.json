@@ -1,0 +1,9 @@
+[
+  {
+    "botId": "00000000-0000-0000-0000-000000000000",
+    "png": "5ddccc93",
+    "hover": "/api/theme-assets/background/hover.gif",
+    "busy": "/api/theme-assets/background/busy.gif",
+    "talk": "/api/theme-assets/background/talk.gif"
+  }
+]
