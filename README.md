@@ -8,7 +8,7 @@
 
 ![演示](docs/demo.gif)
 
-> 高清版：[docs/demo.mp4](docs/demo.mp4)（28 秒）
+> 高清版：[docs/demo.mp4](docs/demo.mp4)（29 秒）
 
 | 状态 | 效果 | 用到的文件 |
 |---|---|---|

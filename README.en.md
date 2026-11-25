@@ -8,7 +8,7 @@ Works with **OpenMausBot** (expression switches automatically with the bot's sta
 
 ![Demo](docs/demo.gif)
 
-> HD version: [docs/demo.mp4](docs/demo.mp4) (28 s, Chinese captions)
+> HD version: [docs/demo.mp4](docs/demo.mp4) (29 s, Chinese captions)
 
 | State | What you see | File |
 |---|---|---|
