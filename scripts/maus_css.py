@@ -15,10 +15,11 @@ for b in bots:
     # 1 干活中：侧边栏这一行的说明文字（aria-label）带"工作中"，它在任何地方的头像都换 busy
     #   （注意：aria-busy 在这一行上表示"正在删除"，不是干活）
     #   另一个标记：侧边栏行里出现"正在做什么"的小字 [data-sidebar-working-phrase]（与语言无关）
-    busy_row = ", ".join([f'{row}:has([data-sidebar-working-phrase])'] + [f'{row}[aria-label*="{w}"]' for w in WORKING])
+    # 注意：:has() 里不能再套 :has()，否则整条规则作废。所以用后代选择器 `行 [data-sidebar-working-phrase]`。
+    busy_row = ", ".join([f'{row} [data-sidebar-working-phrase]'] + [f'{row}[aria-label*="{w}"]' for w in WORKING])
     out.append(f':where(body:has({busy_row})) {img} {{ content: url("{b["busy"]}") !important; }}')
-    # 2 回复输出中：正在流式输出的那条消息、以及有输出时聊天顶栏
-    out.append(f':where([data-look="message-bot"]:has([data-streaming]), [data-look="app"]:has([data-look="bot-text"][data-streaming]) [data-look="chat-header"]) {img} {{ content: url("{b["talk"]}") !important; }}')
+    # 正在输出回复时：聊天顶栏、消息行、侧边栏里当前打开的那一行都换成说话表情（写在 busy 后面，同权重时覆盖 busy）
+    out.append(f':where([data-look="message-bot"]:has([data-streaming]), [data-look="app"]:has([data-look="bot-text"][data-streaming]) :is([data-look="chat-header"], [data-sidebar-bot-row][aria-current="page"])) {img} {{ content: url("{b["talk"]}") !important; }}')
     # 3 鼠标移上（优先级最高）
     out.append(f':where({row}:hover, [data-avatar]:hover) {img} {{ content: url("{b["hover"]}") !important; }}')
     out.append(f'{img}:hover {{ content: url("{b["hover"]}") !important; }}')

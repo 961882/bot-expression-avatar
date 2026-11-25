@@ -72,7 +72,7 @@ cp -r bot-expression-avatar ~/.agents/skills/      # 或 ~/.claude/skills/
 
 之后对 agent 说“给这个 bot 做个表情头像”，它会按 `SKILL.md` 的流程做。
 
-**Grok Bot**：skill 要在 Grok Bot 的界面里上传（它的 bot 跑在云端，读不到本机文件夹）。把仓库打成 zip，或者只上传 `SKILL.md`。
+**Grok Bot**：skill 要在 Grok Bot 的界面里上传（它的 bot 跑在云端，读不到本机文件夹）。Grok Bot 只收 .md、.txt 这类文字文件，每个文件算一个 skill，zip 和 .py 会被跳过。所以请只上传单文件版 [`grok/bot-expression-avatar.md`](grok/bot-expression-avatar.md)，切图脚本已经写在里面了。
 
 ## 使用说明
 

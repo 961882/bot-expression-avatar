@@ -72,7 +72,7 @@ cp -r bot-expression-avatar ~/.agents/skills/      # or ~/.claude/skills/
 
 Then ask your agent: "make an expression avatar for this bot". It follows the steps in `SKILL.md` (written in Chinese; agents read it fine).
 
-**Grok Bot**: upload the skill in Grok Bot's own interface (its bots run in the cloud and can't read local folders). Zip the repo, or upload just `SKILL.md`.
+**Grok Bot**: upload the skill in Grok Bot's own interface (its bots run in the cloud and can't read local folders). Grok Bot only imports text files such as .md and .txt; each file becomes one skill, and zip or .py files are skipped. So upload only the single-file version [`grok/bot-expression-avatar.md`](grok/bot-expression-avatar.md), which has the image-cutting script built in.
 
 ## Usage
 

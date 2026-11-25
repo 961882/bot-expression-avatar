@@ -40,7 +40,7 @@ python3 $SKILL/scripts/make_avatar.py <表情图> <输出目录> <名字> [--siz
 4. `app_settings theme` 读回现有主题的 css，**合并**（别丢其他规则），再 `set_theme` 写回并启用。
 5. 请用户自己看三种状态：鼠标移上、bot 干活时、bot 回复时。
 
-原理：头像是 `[data-avatar="picture"] img`；侧边栏行 `[data-sidebar-bot-row="<botId>"]` 干活时里面出现 `[data-sidebar-working-phrase]`、`aria-label` 带"工作中"（`aria-busy` 在这行上表示正在删除，不能用）；正在输出的消息文字带 `data-streaming`；CSS 用 `content: url(gif)` 换图。界面改版后失效，就在 app 前端代码里重新找这几个标记。
+原理：头像是 `[data-avatar="picture"] img`；侧边栏行 `[data-sidebar-bot-row="<botId>"]` 干活时里面出现 `[data-sidebar-working-phrase]`、`aria-label` 带"工作中"（`aria-busy` 在这行上表示正在删除，不能用）；注意 `:has()` 里不能再套 `:has()`，否则整条规则作废，要用后代选择器 `行 [data-sidebar-working-phrase]`；正在输出的消息文字带 `data-streaming`；CSS 用 `content: url(gif)` 换图。界面改版后失效，就在 app 前端代码里重新找这几个标记。
 
 ## 第 3 步 B：Grok Bot
 头像存在云端，一个 bot 只能放一张，不能按状态切换。
