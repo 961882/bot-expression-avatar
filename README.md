@@ -1,5 +1,7 @@
 # bot-expression-avatar
 
+**中文** | [English](README.en.md)
+
 **一张四格表情图 → 会变表情的 bot 头像。** 头像平时静止；鼠标移上去会眨眼、笑开；bot 执行任务时换上干活的表情；回复你时一张一合，像在说话。
 
 支持 **OpenMausBot**（按状态自动换表情）和 **Grok Bot**（四种表情轮播）。可以当 AI agent 的 skill 用，也可以直接跑脚本。
