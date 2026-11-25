@@ -8,6 +8,14 @@ aliases: [头像, 动态头像, 表情头像, bot 头像, avatar, expression ava
 
 完整说明和案例见 README.md。本文件是给 agent 的执行步骤。脚本在本 skill 的 `scripts/` 下，下文用 `$SKILL` 指本 skill 所在目录。
 
+## 第 0 步：用户只给了仓库链接时
+1. `git clone https://github.com/961882/bot-expression-avatar.git`（或下载 zip 解压），`$SKILL` 就是这个目录；`pip install pillow`。
+2. 先看你自己有什么能力，再决定哪些步骤自己做、哪些交给用户：
+   - 有生图工具 → 第 1 步自己做；没有 → 把提示词给用户，请他用任意生图工具出图后发回来。
+   - 你在 OpenMausBot 里、有 `app_settings` → 第 3 步 A 全部自己做；没有 → 把生成的文件和第 3 步 A 的做法交给用户。
+   - Grok Bot 的头像只能用户在界面里自己上传（第 3 步 B），你把 `名字-grok.gif` 发给他并说清步骤。
+3. 一次只问用户一件事：给哪个 bot 做、想要什么动物或风格。
+
 ## 风格
 默认：3D 皮克斯风、白底、藏青色带领衬衫、金色圆框眼镜、胸前一枚和 bot 职责相关的金色小胸针。每个 bot 一种动物，不要和已有 bot 重复。用户另有风格要求时以用户为准。
 
@@ -32,7 +40,7 @@ python3 $SKILL/scripts/make_avatar.py <表情图> <输出目录> <名字> [--siz
 4. `app_settings theme` 读回现有主题的 css，**合并**（别丢其他规则），再 `set_theme` 写回并启用。
 5. 请用户自己看三种状态：鼠标移上、bot 干活时、bot 回复时。
 
-原理：头像是 `[data-avatar="picture"] img`；侧边栏行 `[data-sidebar-bot-row="<botId>"]` 干活时带 `aria-busy="true"`；正在输出的消息文字带 `data-streaming`；CSS 用 `content: url(gif)` 换图。界面改版后失效，就在 app 前端代码里重新找这几个标记。
+原理：头像是 `[data-avatar="picture"] img`；侧边栏行 `[data-sidebar-bot-row="<botId>"]` 干活时里面出现 `[data-sidebar-working-phrase]`、`aria-label` 带"工作中"（`aria-busy` 在这行上表示正在删除，不能用）；正在输出的消息文字带 `data-streaming`；CSS 用 `content: url(gif)` 换图。界面改版后失效，就在 app 前端代码里重新找这几个标记。
 
 ## 第 3 步 B：Grok Bot
 头像存在云端，一个 bot 只能放一张，不能按状态切换。

@@ -23,6 +23,7 @@
 ## 目录
 
 - [它是怎么做的](#它是怎么做的)
+- [最快的用法：把链接交给 agent](#最快的用法把链接交给-agent)
 - [安装](#安装)
 - [使用说明](#使用说明)
   - [第 1 步：出一张 2×2 表情图](#第-1-步出一张-22-表情图)
@@ -37,6 +38,21 @@
 1. 用任意 AI 生图工具出**一张** 2×2 表情图：同一个角色、同一机位，只有表情不同。一张图出四格，能保证四个表情里人物位置一致，切换时不会跳。
 2. `make_avatar.py` 把四格切开、自动对齐，做成 1 张静态 PNG 和 4 段 GIF（中间带渐变过渡，不是硬切）。
 3. 在 OpenMausBot 里，头像设成静态 PNG；主题 CSS 认出“鼠标停在上面”“bot 正在忙”“消息正在输出”这三种状态，把头像换成对应的 GIF。Grok Bot 不支持按状态换图，就上传一段四表情轮播的 GIF。
+
+## 最快的用法：把链接交给 agent
+
+对你的 agent（OpenMausBot、Claude Code、Codex 等）说：
+
+> 按 https://github.com/961882/bot-expression-avatar 给我的 bot 做一个表情头像
+
+agent 会自己下载、出图、切图。能做到哪一步取决于它有什么能力：
+
+| 步骤 | agent 自己能做吗 |
+|---|---|
+| 出四格表情图 | 有生图工具就能；没有的话它会给你提示词，你出图后发给它 |
+| 切图、做动图 | 能（需要 Python 3 和 Pillow） |
+| 在 OpenMausBot 里设头像、套主题 | 在 OpenMausBot 里运行的 bot 能全自动完成；其他 agent 会把文件和步骤交给你 |
+| 在 Grok Bot 里换头像 | 不能，要你在 Grok Bot 界面里自己上传 `名字-grok.gif`（30 秒） |
 
 ## 安装
 
@@ -132,7 +148,7 @@ OpenMausBot 没有“悬停才动”的开关，用**主题**实现：头像设�
 | 状态 | 界面标记 |
 |---|---|
 | 头像 | `[data-avatar="picture"] img`，用 `img[src*="附件 id 前 8 位"]` 认出是哪个 bot |
-| 执行任务中 | 侧边栏这个 bot 的那一行 `[data-sidebar-bot-row="<botId>"]` 带 `aria-busy="true"` |
+| 执行任务中 | 侧边栏这个 bot 的那一行 `[data-sidebar-bot-row="<botId>"]` 里出现 `[data-sidebar-working-phrase]`，或它的 `aria-label` 带"工作中"（注意 `aria-busy` 在这里表示正在删除，不能用） |
 | 回复输出中 | 消息文字 `[data-look="bot-text"]` 带 `data-streaming` |
 | 鼠标移上 | `:hover` |
 

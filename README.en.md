@@ -23,6 +23,7 @@ Works with **OpenMausBot** (expression switches automatically with the bot's sta
 ## Contents
 
 - [How it works](#how-it-works)
+- [Fastest way: hand the link to your agent](#fastest-way-hand-the-link-to-your-agent)
 - [Install](#install)
 - [Usage](#usage)
   - [Step 1: Generate a 2×2 expression sheet](#step-1-generate-a-22-expression-sheet)
@@ -37,6 +38,21 @@ Works with **OpenMausBot** (expression switches automatically with the bot's sta
 1. Use any AI image generator to make **one** 2×2 expression sheet: the same character, same framing, only the facial expression changes. Getting all four faces in one image keeps the character in the same spot, so switching between them doesn't jump.
 2. `make_avatar.py` cuts the four panels, aligns them automatically, and produces 1 still PNG plus 4 GIFs (with cross-fade transitions, not hard cuts).
 3. In OpenMausBot, the bot's picture is the still PNG; theme CSS detects three states — mouse hovering, bot busy, message streaming — and swaps in the matching GIF. Grok Bot can't switch by state, so you upload one GIF that cycles through all four faces.
+
+## Fastest way: hand the link to your agent
+
+Tell your agent (OpenMausBot, Claude Code, Codex…):
+
+> Use https://github.com/961882/bot-expression-avatar to make an expression avatar for my bot
+
+It downloads the repo, generates the sheet and slices it. How far it gets depends on its tools:
+
+| Step | Can the agent do it alone? |
+|---|---|
+| Generate the 2×2 sheet | Yes if it has an image tool; otherwise it gives you the prompt and you send back the image |
+| Slice into PNG + GIFs | Yes (needs Python 3 and Pillow) |
+| Set the picture and theme in OpenMausBot | Fully automatic for a bot running inside OpenMausBot; other agents hand you the files and steps |
+| Change the avatar in Grok Bot | No — you upload `name-grok.gif` in Grok Bot's interface yourself (30 seconds) |
 
 ## Install
 
@@ -132,7 +148,7 @@ OpenMausBot has no "animate on hover" switch, so this uses a **theme**: the bot'
 | State | UI hook |
 |---|---|
 | Avatar | `[data-avatar="picture"] img`, matched per bot by `img[src*="first 8 chars of attachment id"]` |
-| Working | The bot's sidebar row `[data-sidebar-bot-row="<botId>"]` has `aria-busy="true"` |
+| Working | The bot's sidebar row `[data-sidebar-bot-row="<botId>"]` contains `[data-sidebar-working-phrase]`, or its `aria-label` includes "Working" / "工作中" (note: `aria-busy` on that row means *deleting*, so it can't be used) |
 | Replying | Message text `[data-look="bot-text"]` has `data-streaming` |
 | Hover | `:hover` |
 

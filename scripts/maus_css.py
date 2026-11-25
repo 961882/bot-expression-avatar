@@ -6,12 +6,17 @@ bots.json: [{"botId":"…","png":"<头像 PNG 附件 id 的前 8 位>","hover":"
 """
 import json, sys
 bots = json.load(open(sys.argv[1]))
+# app 界面语言里"工作中"的写法（chat.activity.working）
+WORKING = ["工作中", "Working", "作業中", "작업 중"]
 out = ["/* bot-expression-avatar: 自动生成，勿手改 */"]
 for b in bots:
     img = f'img[src*="{b["png"]}"]'
     row = f'[data-sidebar-bot-row="{b["botId"]}"]'
-    # 1 干活中：这个 bot 在侧边栏标为忙，它在任何地方的头像都换 busy
-    out.append(f':where(body:has({row}[aria-busy="true"])) {img} {{ content: url("{b["busy"]}") !important; }}')
+    # 1 干活中：侧边栏这一行的说明文字（aria-label）带"工作中"，它在任何地方的头像都换 busy
+    #   （注意：aria-busy 在这一行上表示"正在删除"，不是干活）
+    #   另一个标记：侧边栏行里出现"正在做什么"的小字 [data-sidebar-working-phrase]（与语言无关）
+    busy_row = ", ".join([f'{row}:has([data-sidebar-working-phrase])'] + [f'{row}[aria-label*="{w}"]' for w in WORKING])
+    out.append(f':where(body:has({busy_row})) {img} {{ content: url("{b["busy"]}") !important; }}')
     # 2 回复输出中：正在流式输出的那条消息、以及有输出时聊天顶栏
     out.append(f':where([data-look="message-bot"]:has([data-streaming]), [data-look="app"]:has([data-look="bot-text"][data-streaming]) [data-look="chat-header"]) {img} {{ content: url("{b["talk"]}") !important; }}')
     # 3 鼠标移上（优先级最高）
